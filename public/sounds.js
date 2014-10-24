@@ -11,7 +11,9 @@ function preload(){
 
 }
 var background,
+    text,
     music;
+
 function create(){
   background = game.add.sprite(0, 0, 'background');
   background.name = 'background';
@@ -21,10 +23,36 @@ function create(){
 
   music = game.add.audio('music');
   music.play();
+  makeButton('SOUND!', 600, 100);
 
-   game.input.onDown.add(changeVolume, this);
+  //game.input.onDown.add(changeVolume, this);
 }
 
-function render() {
-    game.debug.soundInfo(music, 20, 32);
+function makeButton(name, x, y) {
+
+    var button = game.add.button(x, y, 'button', click, this, 0, 1, 2);
+    button.name = name;
+    button.scale.set(2, 1.5);
+    button.smoothed = false;
+}
+
+function click(button) {
+  if(music.isPlaying){
+    music.pause();
+  } else {
+    music.resume();
+  }
+}
+
+function changeVolume(pointer) {
+
+    if (pointer.y < 300)
+    {
+        music.pause();
+    }
+    else
+    {
+        music.resume();
+    }
+
 }
